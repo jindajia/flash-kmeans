@@ -2,6 +2,7 @@ from .interface import FlashKMeans
 
 try:
     from .kmeans_triton_impl import (
+        _euclid_iter_compiled,
         batch_kmeans_Euclid,
         batch_kmeans_Cosine,
         batch_kmeans_Dot,
@@ -26,6 +27,7 @@ except Exception:
             "Triton kmeans implementation not found, and this function has no torch fallback."
         )
 
+    _euclid_iter_compiled = None
     triton_centroid_update_euclid = no_torch_fallback
     triton_centroid_update_sorted_euclid = no_torch_fallback
     batch_kmeans_Euclid = batch_kmeans_Euclid_torch_native
@@ -35,6 +37,7 @@ except Exception:
     kmeans_largeN = no_torch_fallback
 
 __all__ = [
+    "_euclid_iter_compiled",
     "batch_kmeans_Euclid",
     "batch_kmeans_Cosine",
     "batch_kmeans_Dot",
